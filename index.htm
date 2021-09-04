@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        table{border-collapse: collapse;margin: 5vh auto;}
+        td{border: 1px solid #129128;padding: 25px; transition: all .2s ;}
+        h1{text-align: center;margin-top: 15vh;}
+        td:hover{cursor: pointer;background-color: aquamarine;}
+        td:active{background-color: rgb(13, 129, 90)}
+    </style>
+</head>
+<body>
+    <h1 id='cap'>15</h1>
+    <table id="table">
+        <caption>asdasdasdasd</caption>
+    </table>
+    <script>
+        const table = document.getElementById('table')
+        let kod = '',
+            arr = [],
+            container = [],
+            box = '',
+            box2,
+            sec = 15
+
+        let gover = setInterval(timer, 1000)
+
+        function timer(){
+            document.getElementById('cap').innerHTML = --sec
+            if(sec <= 0) {
+                clearInterval(gover)
+                alert('Game Over')
+                location.reload();
+            }
+        }
+
+        for(let i = 1; i <= 16; i++){
+            arr.push(i)
+            box += i
+        }
+
+        for(let i = 1; i <= 4; i++){
+            kod += '<tr>'
+            for(let j = 1; j <= 4; j++){
+                let x = rand(0, arr.length - 1)
+                kod += '<td id= td' + arr[x] + ' onclick = clck('+ arr[x] +')>'+ arr[x] +'</td>'
+                arr.splice(x, 1)
+            }
+            kod += '</tr>'
+        }
+
+        function clck(x){
+            document.getElementById('td'+x).style.backgroundColor = 'rgb(16, 129, 90)'
+            container.push(x)
+            box2 = container.join('')
+            if(box2.length == box.length && box2 == box) {
+                alert('win')
+                clearInterval(gover)
+                location.reload();
+            }
+            else if(box2.length >= box.length && box2 != box) {
+                alert('lose')
+                clearInterval(gover)
+                location.reload();
+            }
+        }
+
+        table.innerHTML = kod
+
+        
+        function rand(min, max) {
+                return Math.floor(Math.random() * (max - min + 1) ) + min;
+            }
+        </script>
+</body>
+</html>
